@@ -17,4 +17,19 @@ public class BinarySearch {
         }
         return -1;
     }
+
+    // Recursive binary search
+    public static int recursiveBinarySearch(int[] arr, int key, int low, int high) {
+        if (low > high) {
+            return -1;
+        }
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == key) {
+            return mid;
+        } else if (arr[mid] < key) {
+            return recursiveBinarySearch(arr, key, mid + 1, high);
+        } else {
+            return recursiveBinarySearch(arr, key, low, mid - 1);
+        }
+    }
 }

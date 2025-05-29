@@ -54,7 +54,9 @@ public class GuavaLRUCacheService implements CacheService {
     @Override
     public double getAveragePutTimeMillis() {
         long puts = putCount.get();
-        if (puts == 0) return 0;
+        if (puts == 0) {
+            return 0;
+        }
         return totalPutTime.get() / (puts * 1_000_000.0);
     }
 }

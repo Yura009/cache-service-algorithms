@@ -35,8 +35,15 @@ public class LFUCacheService implements CacheService {
         long start = System.nanoTime();
 
         if (cache.size() >= MAX_SIZE) {
-
+            evict();
         }
+        cache.put(key, entry);
+        lastAccess.put(key, System.currentTimeMillis());
+        frequencies.put(key, 1);
+
+        long duration = System.nanoTime() - start;
+        totalPutTime.addAndGet(duration);
+        putCount.incrementAndGet();
     }
 
     private void evict() {

@@ -7,16 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
-public class GuavaLRUCacheService implements CacheService {
+public class GuavaLRUCacheService extends AbstractCacheService {
     private static final Logger logger = LoggerFactory.getLogger(GuavaLRUCacheService.class);
     private static final int MAX_SIZE = 100_000;
     private static final long EXPIRATION_TIME_MS = 5000;
     private final Cache<String, CacheEntry> cache;
-    private final AtomicLong evictionCount = new AtomicLong(0);
-    private final AtomicLong totalPutTime = new AtomicLong(0);
-    private final AtomicLong putCount = new AtomicLong(0);
 
     public GuavaLRUCacheService() {
         cache = CacheBuilder.newBuilder()
@@ -44,19 +40,5 @@ public class GuavaLRUCacheService implements CacheService {
         long duration = System.nanoTime() - start;
         totalPutTime.addAndGet(duration);
         putCount.incrementAndGet();
-    }
-
-    @Override
-    public long getEvictionCount() {
-        return evictionCount.get();
-    }
-
-    @Override
-    public double getAveragePutTimeMillis() {
-        long puts = putCount.get();
-        if (puts == 0) {
-            return 0;
-        }
-        return totalPutTime.get() / (puts * 1_000_000.0);
     }
 }

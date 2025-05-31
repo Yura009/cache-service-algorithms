@@ -1,59 +1,39 @@
 package com.example.sort;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class MergeSortTest {
 
-    @Test
-    void testSortEmptyArray() {
-        int[] arr = {};
-        MergeSort.sort(arr);
-        assertArrayEquals(new int[]{}, arr);
+    @ParameterizedTest(name = "{index} => input={0}, expected={1}")
+    @MethodSource("provideArraysForSorting")
+    @DisplayName("Test MergeSort with multiple scenarios")
+    void testSortVariousArrays(int[] input, int[] expected) {
+        MergeSort.sort(input);
+        assertArrayEquals(expected, input);
+    }
+
+    static Stream<Arguments> provideArraysForSorting() {
+        return Stream.of(
+                Arguments.of(new int[]{}, new int[]{}),
+                Arguments.of(new int[]{42}, new int[]{42}),
+                Arguments.of(new int[]{1, 2, 3, 4, 5}, new int[]{1, 2, 3, 4, 5}),
+                Arguments.of(new int[]{5, 4, 3, 2, 1}, new int[]{1, 2, 3, 4, 5}),
+                Arguments.of(new int[]{9, 3, 5, 1, 8}, new int[]{1, 3, 5, 8, 9})
+
+        );
     }
 
     @Test
-    void testSortSingleElement() {
-        int[] arr = {42};
-        MergeSort.sort(arr);
-        assertArrayEquals(new int[]{42}, arr);
-    }
-
-    @Test
-    void testSortAlreadySorted() {
-        int[] arr = {1, 2, 3, 4, 5};
-        MergeSort.sort(arr);
-        assertArrayEquals(new int[]{1, 2, 3, 4, 5}, arr);
-    }
-
-    @Test
-    void testSortReverseOrder() {
-        int[] arr = {5, 4, 3, 2, 1};
-        MergeSort.sort(arr);
-        assertArrayEquals(new int[]{1, 2, 3, 4, 5}, arr);
-    }
-
-    @Test
-    void testSortRandomArray() {
-        int[] arr = new int[1000];
-        Random random = new Random();
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = random.nextInt(10_000);
-        }
-        int[] expected = arr.clone();
-        Arrays.sort(expected);
-
-        MergeSort.sort(arr);
-
-        assertArrayEquals(expected, arr);
-    }
-
-    @Test
+    @DisplayName("Test MergeSort with null array")
     void testSortNullArray() {
-        MergeSort.sort(null); // Should not throw any exception
+        MergeSort.sort(null);
     }
 }

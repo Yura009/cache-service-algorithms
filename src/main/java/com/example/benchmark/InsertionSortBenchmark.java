@@ -5,6 +5,7 @@ import com.example.sort.InsertionSort;
 import java.util.Random;
 
 public class InsertionSortBenchmark {
+    private static final double NANOS_IN_MILLISECOND = 1_000_000.0;
 
     public static void main(String[] args) {
         int size = 100_000;
@@ -21,7 +22,7 @@ public class InsertionSortBenchmark {
         InsertionSort.sort(arrayToSort);
         long duration = System.nanoTime() - start;
 
-        System.out.println("Insertion Sort on elements took: " + (duration / 1_000_000.0) + " ms");
+        System.out.println("Insertion Sort on elements took: " + (duration / NANOS_IN_MILLISECOND) + " ms");
     }
 
 }

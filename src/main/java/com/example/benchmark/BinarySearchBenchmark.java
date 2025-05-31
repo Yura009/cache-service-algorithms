@@ -7,6 +7,8 @@ import java.util.Random;
 public class BinarySearchBenchmark {
 
     private static final int[] largeSortedArray = new int[1_000_000];
+    private static final double NANOS_IN_MILLISECOND = 1_000_000.0;
+
 
     static {
         for (int i = 0; i < largeSortedArray.length; i++) {
@@ -28,7 +30,7 @@ public class BinarySearchBenchmark {
         System.out.println("Target: " + target);
         System.out.println("Iterative result index: " + resultIterative);
         System.out.println("Recursive result index: " + resultRecursive);
-        System.out.println("Iterative Binary Search took: " + (durationIterative / 1_000_000.0) + " ms");
-        System.out.println("Recursive Binary Search took: " + (durationRecursive / 1_000_000.0) + " ms");
+        System.out.println("Iterative Binary Search took: " + (durationIterative / NANOS_IN_MILLISECOND) + " ms");
+        System.out.println("Recursive Binary Search took: " + (durationRecursive / NANOS_IN_MILLISECOND) + " ms");
     }
 }

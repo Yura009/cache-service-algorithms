@@ -8,6 +8,8 @@ public class MergeSortBenchmark {
 
     private static final int ARRAY_SIZE = 1_000_000;
     private static final int[] largeUnsortedArray = new int[ARRAY_SIZE];
+    private static final double NANOS_IN_MILLISECOND = 1_000_000.0;
+
 
     static {
         Random random = new Random();
@@ -23,6 +25,6 @@ public class MergeSortBenchmark {
         MergeSort.sort(arrayToSort);
         long duration = System.nanoTime() - start;
 
-        System.out.println("Merge Sort on elements took: " + (duration / 1_000_000.0) + " ms");
+        System.out.println("Merge Sort on elements took: " + (duration / NANOS_IN_MILLISECOND) + " ms");
     }
 }

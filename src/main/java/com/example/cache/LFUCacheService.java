@@ -6,10 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class LFUCacheService extends AbstractCacheService implements CacheService {
+public class LFUCacheService extends AbstractCacheService {
     private static final Logger logger = LoggerFactory.getLogger(LFUCacheService.class);
-    private static final int MAX_SIZE = 100_000;
-    private static final long EXPIRATION_TIME_MS = 5000;
     private final Map<String, CacheEntry> cache = new ConcurrentHashMap<>();
     private final Map<String, Long> lastAccess = new ConcurrentHashMap<>();
     private final Map<String, Integer> frequencies = new ConcurrentHashMap<>();

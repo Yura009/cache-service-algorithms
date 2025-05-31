@@ -8,10 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public class GuavaLRUCacheService extends AbstractCacheService implements CacheService {
+public class GuavaLRUCacheService extends AbstractCacheService {
     private static final Logger logger = LoggerFactory.getLogger(GuavaLRUCacheService.class);
-    private static final int MAX_SIZE = 100_000;
-    private static final long EXPIRATION_TIME_MS = 5000;
     private final Cache<String, CacheEntry> cache;
 
     public GuavaLRUCacheService() {

@@ -1,9 +1,12 @@
 package com.example;
 
-import com.example.cache.*;
+import com.example.cache.CacheEntry;
+import com.example.cache.CacheService;
+import com.example.cache.GuavaLRUCacheService;
+import com.example.cache.LFUCacheService;
 import com.example.search.BinarySearch;
-import com.example.sort.MergeSort;
 import com.example.sort.InsertionSort;
+import com.example.sort.MergeSort;
 import com.example.tree.BinaryTreeTraversal;
 import com.example.tree.TreeNode;
 
@@ -26,13 +29,14 @@ public class CacheServiceAlgorithmsApplication {
         cacheService.put("a", new CacheEntry("value1"));
         cacheService.put("b", new CacheEntry("value2"));
 
-        // Access 'a' to update lastAccess
         cacheService.get("a");
 
-        // Wait to test expiration
-        try { Thread.sleep(6000); } catch (InterruptedException ignored) {}
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException ignored) {
+        }
 
-        cacheService.put("c", new CacheEntry("value3")); // triggers possible eviction
+        cacheService.put("c", new CacheEntry("value3"));
 
         System.out.println("Evictions: " + cacheService.getEvictionCount());
         System.out.println("Avg put time (ms): " + cacheService.getAveragePutTimeMillis());

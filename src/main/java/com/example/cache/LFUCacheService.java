@@ -5,20 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
-public class LFUCacheService implements CacheService {
+public class LFUCacheService extends AbstractCacheService {
     private static final Logger logger = LoggerFactory.getLogger(LFUCacheService.class);
-    private static final int MAX_SIZE = 100_000;
-    private static final long EXPIRATION_TIME_MS = 5000;
-
     private final Map<String, CacheEntry> cache = new ConcurrentHashMap<>();
     private final Map<String, Long> lastAccess = new ConcurrentHashMap<>();
     private final Map<String, Integer> frequencies = new ConcurrentHashMap<>();
-
-    private final AtomicLong evictionCount = new AtomicLong(0);
-    private final AtomicLong totalPutTime = new AtomicLong(0);
-    private final AtomicLong putCount = new AtomicLong(0);
 
     @Override
     public CacheEntry get(String key) {
@@ -75,17 +67,5 @@ public class LFUCacheService implements CacheService {
         frequencies.remove(key);
         evictionCount.incrementAndGet();
         logger.info("Evicted cache entry with key: {}", key);
-    }
-
-    @Override
-    public long getEvictionCount() {
-        return evictionCount.get();
-    }
-
-    @Override
-    public double getAveragePutTimeMillis() {
-        long puts = putCount.get();
-        if (puts == 0) return 0;
-        return totalPutTime.get() / (puts * 1_000_000.0);
     }
 }
